@@ -1,0 +1,18 @@
+{
+  "itemGroup.cucumber": "Cucumber Tab",
+  "item.wacumber.cucumber": "Cucumber",
+  "item.wacumber.cucumber_seed": "Cucumber Seeds",
+  "block.wacumber.cucumber_plant": "Cucumber Plant",
+
+  "tooltip.wacumber.cucumber.line1": "Why would you eat the little cucumber?!",
+  "tooltip.wacumber.cucumber.line2": "'Take That！'",
+  "tooltip.wacumber.cucumber.shift1": "Little cucumber, aaaaah-oh-oh-oh-ah!",
+
+  "wacumber.configuration.title": "Wacumber Configs",
+  "wacumber.configuration.section.wacumber.common.toml": "Wacumber Configs",
+  "wacumber.configuration.section.wacumber.common.toml.title": "Wacumber Configs",
+  "wacumber.configuration.items": "Item List",
+  "wacumber.configuration.logDirtBlock": "Log Dirt Block",
+  "wacumber.configuration.magicNumberIntroduction": "Magic Number Text",
+  "wacumber.configuration.magicNumber": "Magic Number"
+}
