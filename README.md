@@ -1,25 +1,25 @@
+# Wacumber · 若叶瓜
 
-Installation information
-=======
+一个围绕黄瓜的 Minecraft 1.21.1 模组（NeoForge）。
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## 内容
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- **黄瓜**：食物，吃下获得幸运 I
+- **黄瓜种子 / 黄瓜植株**：种在农田，4 阶段生长，成熟挖掘掉 3 个黄瓜 + 1~3 个种子
+- **黄瓜二分剑**：命中不减血，改为血量减半；≤5 血直接斩杀；否则原生成同血量分身
+- **黄瓜镐 / 黄瓜战斧**：挖得动的方块掉落翻倍，冷却 5 秒
+- **静默生长**（状态效果）：直径 18 格内作物 1.5 倍速生长，钓鱼 20% 额外掉宝藏
+- 创造模式有独立的「黄瓜物品栏」
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## 环境
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+- Minecraft 1.21.1
+- NeoForge 21.1.249+
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## JAVA版本
+
+需要 JDK 21。
+
+## 许可
+
+All Rights Reserved © 林芝酱
