@@ -9,6 +9,7 @@ import com.mojang.logging.LogUtils;
 
 import top.linzhi.wacumber.block.ModBlocks;
 import top.linzhi.wacumber.client.ModTooltips;
+import top.linzhi.wacumber.effect.ModMobEffects;
 import top.linzhi.wacumber.item.ModCreativeTabs;
 import top.linzhi.wacumber.item.ModItems;
 
@@ -54,6 +55,8 @@ public class Wacumber {
         ModTooltips.registerAll();
         // 黄瓜物品栏注册进注册总线
         ModCreativeTabs.register(modEventBus);
+        // 状态效果（静默生长等）注册进注册总线
+        ModMobEffects.register(modEventBus);
 
         // 注册到 NeoForge 游戏事件总线：仅当本类存在 @SubscribeEvent 方法时需要
         NeoForge.EVENT_BUS.register(this);

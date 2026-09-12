@@ -2,9 +2,19 @@
   "itemGroup.cucumber": "黄瓜物品栏",
   "item.wacumber.cucumber": "黄瓜",
   "item.wacumber.cucumber_seed": "黄瓜种子",
+  "item.wacumber.cucumber_sword": "黄瓜二分剑",
+  "item.wacumber.cucumber_pickaxe": "黄瓜镐",
+  "item.wacumber.cucumber_axe": "黄瓜战斧",
   "block.wacumber.cucumber_plant": "黄瓜植株",
+  "effect.wacumber.slient_grow": "静默生长",
 
   "tooltip.wacumber.cucumber.line1": "为什么要吃小黄瓜？！",
   "tooltip.wacumber.cucumber.line2": "“我不要这个”",
-  "tooltip.wacumber.cucumber.shift1": "小黄瓜啊啊啊啊哦哦哦啊哦"
+  "tooltip.wacumber.cucumber.shift1": "小黄瓜啊啊啊啊哦哦哦啊哦",
+
+  "tooltip.wacumber.cucumber_sword.line1": "二分灵魂的力量在你指尖跳动",
+  "tooltip.wacumber.cucumber_pickaxe.line1": "拿黄瓜来挖矿吧！",
+  "tooltip.wacumber.cucumber_pickaxe.shift1": "抹茶巴菲也是绿色的",
+  "tooltip.wacumber.cucumber_axe.line1": "砍树如同砍断木偶的提线一般",
+  "tooltip.wacumber.cucumber_axe.shift1": "快要坏掉了"
 }

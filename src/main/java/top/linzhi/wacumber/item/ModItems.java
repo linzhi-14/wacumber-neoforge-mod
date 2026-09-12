@@ -2,19 +2,16 @@ package top.linzhi.wacumber.item;
 
 import top.linzhi.wacumber.Wacumber;
 import top.linzhi.wacumber.block.ModBlocks;
+import top.linzhi.wacumber.item.properties.ModItemProperties;
 
 import java.util.function.Supplier;
 
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -29,6 +26,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  *   <li>主类构造器调用 {@link #register(IEventBus)}，把物品注册总线注入模组事件总线（只需一次）；</li>
  *   <li>新物品 = 在本类里写一行注册常量，例如
  *       {@code public static final DeferredItem<Item> XXX = registerItem("xxx", 属性);}</li>
+ *   <li>物品属性（食物 / 攻击力 / 攻速等）统一写在
+ *       {@link ModItemProperties}，本类只负责注册；</li>
  *   <li>每个注册方法（{@link #registerItem} / {@link #registerBlockItem} / {@link #register}）
  *       都会把注册好的物品自动追加进主类 {@code Wacumber.MOD_ITEMS} 清单，
  *       黄瓜物品栏遍历该清单自动展示 —— 不需要再手动往清单里加物品。</li>
@@ -45,9 +44,9 @@ public final class ModItems {
     /**
      * 黄瓜：食物物品，注册 id 为 "wacumber:cucumber"。
      * 使用普通 Item 即可——tooltip 由 ModTooltips 注册表集中管理（见 ModTooltips.registerAll）。
-     * 属性见 {@link #cucumberItemProperties()}。
      */
-    public static final DeferredItem<Item> CUCUMBER = registerItem("cucumber", cucumberItemProperties());
+    public static final DeferredItem<Item> CUCUMBER =
+            registerItem("cucumber", ModItemProperties.cucumber());
 
     /**
      * 黄瓜种子：注册 id 为 "wacumber:cucumber_seed"。
@@ -55,7 +54,32 @@ public final class ModItems {
      */
     public static final DeferredItem<ItemNameBlockItem> CUCUMBER_SEED = register(
             "cucumber_seed",
-            () -> new ItemNameBlockItem(ModBlocks.CUCUMBER_PLANT.get(), new Item.Properties()));
+            () -> new ItemNameBlockItem(ModBlocks.CUCUMBER_PLANT.get(), ModItemProperties.cucumberSeed()));
+
+    /**
+     * 黄瓜二分剑：命中不造成伤害，改为把目标当前血量减半（向下取整）；
+     * 目标当前血量 ≤ 5 时直接斩杀，否则在目标坐标生成一只同血量分身。
+     * 效果实现见 {@code top.linzhi.wacumber.event.ToolAbilityHandler}。
+     */
+    public static final DeferredItem<SwordItem> CUCUMBER_SWORD = register(
+            "cucumber_sword",
+            () -> new CucumberSwordItem(CucumberTier.INSTANCE, ModItemProperties.cucumberSword()));
+
+    /**
+     * 黄瓜镐：挖掘「它能挖动的方块」时掉落翻倍，冷却 5 秒。
+     * 效果实现见 {@code top.linzhi.wacumber.event.ToolAbilityHandler#onBlockDrops}。
+     */
+    public static final DeferredItem<PickaxeItem> CUCUMBER_PICKAXE = register(
+            "cucumber_pickaxe",
+            () -> new PickaxeItem(CucumberTier.INSTANCE, ModItemProperties.cucumberPickaxe()));
+
+    /**
+     * 黄瓜战斧：挖掘「它能挖动的方块」时掉落翻倍，冷却 5 秒；
+     * 同时保留原版斧的剥皮 / 去氧化 / 脱蜡功能。效果同镐。
+     */
+    public static final DeferredItem<AxeItem> CUCUMBER_AXE = register(
+            "cucumber_axe",
+            () -> new AxeItem(CucumberTier.INSTANCE, ModItemProperties.cucumberAxe()));
 
     private ModItems() {
         // 纯工具类，禁止实例化
@@ -65,7 +89,7 @@ public final class ModItems {
      * 注册一个普通物品（使用默认 Item 类），注册后自动加入主类物品清单。
      *
      * @param name       注册路径，如 "cucumber"，最终 id 为 "wacumber:cucumber"
-     * @param properties 物品属性（可带 food / attributes 等）
+     * @param properties 物品属性（可带 food / attributes 等，来自 {@link ModItemProperties}）
      */
     public static DeferredItem<Item> registerItem(String name, Item.Properties properties) {
         DeferredItem<Item> item = ITEMS.register(name, () -> new Item(properties));
@@ -104,25 +128,5 @@ public final class ModItems {
      */
     public static void register(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
-    }
-
-    /** 黄瓜的物品属性：食物（饥饿 2 / 饱和度系数 3 / 幸运 I 3 分钟），手持攻击伤害合计 1 */
-    private static Item.Properties cucumberItemProperties() {
-        return new Item.Properties()
-                .food(new FoodProperties.Builder()
-                        .nutrition(2) // 补充饥饿值 2
-                        // 饱和度系数 3：实际饱和量 = 饥饿值 × 系数 × 2 = 2 × 3 × 2 = 12
-                        // （若你想要的是"实际 +3 饱和度"，把 3f 改成 0.75f 即可）
-                        .saturationModifier(3f)
-                        // 吃下后获得 幸运 I（amplifier 0），持续 3 分钟 = 3600 tick，100% 触发
-                        .effect(() -> new MobEffectInstance(MobEffects.LUCK, 3 * 60 * 20, 0), 1f)
-                        .build())
-                .attributes(ItemAttributeModifiers.builder()
-                        // 徒手基础攻击伤害为 1.0，这里加成 0.0 → 手持黄瓜总攻击伤害 = 1
-                        .add(Attributes.ATTACK_DAMAGE,
-                                new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 0.0,
-                                        AttributeModifier.Operation.ADD_VALUE),
-                                EquipmentSlotGroup.MAINHAND)
-                        .build());
     }
 }

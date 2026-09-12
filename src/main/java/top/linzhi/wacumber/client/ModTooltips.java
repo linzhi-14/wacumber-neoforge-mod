@@ -86,6 +86,29 @@ public final class ModTooltips {
                 List.of(
                         TooltipLine.of("tooltip.wacumber.cucumber.shift1", ChatFormatting.DARK_GREEN)),
                 true);
+
+        // —— 黄瓜二分剑（无 Shift 行：按住 Shift 也显示普通行）——
+        register(ModItems.CUCUMBER_SWORD,
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.cucumber_sword.line1", ChatFormatting.DARK_GREEN)),
+                List.of(),
+                true);
+
+        // —— 黄瓜镐 ——
+        register(ModItems.CUCUMBER_PICKAXE,
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.cucumber_pickaxe.line1", ChatFormatting.DARK_GREEN)),
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.cucumber_pickaxe.shift1", ChatFormatting.DARK_GREEN)),
+                true);
+
+        // —— 黄瓜战斧 ——
+        register(ModItems.CUCUMBER_AXE,
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.cucumber_axe.line1", ChatFormatting.DARK_GREEN)),
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.cucumber_axe.shift1", ChatFormatting.DARK_GREEN)),
+                true);
     }
 
     // ============ 客户端：统一渲染 tooltip ============

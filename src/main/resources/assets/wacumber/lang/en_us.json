@@ -2,11 +2,21 @@
   "itemGroup.cucumber": "Cucumber Tab",
   "item.wacumber.cucumber": "Cucumber",
   "item.wacumber.cucumber_seed": "Cucumber Seeds",
+  "item.wacumber.cucumber_sword": "Cucumber Halving Sword",
+  "item.wacumber.cucumber_pickaxe": "Cucumber Pickaxe",
+  "item.wacumber.cucumber_axe": "Cucumber Battle Axe",
   "block.wacumber.cucumber_plant": "Cucumber Plant",
+  "effect.wacumber.slient_grow": "Silent Growth",
 
   "tooltip.wacumber.cucumber.line1": "Why would you eat the little cucumber?!",
   "tooltip.wacumber.cucumber.line2": "'Take That！'",
   "tooltip.wacumber.cucumber.shift1": "Little cucumber, aaaaah-oh-oh-oh-ah!",
+
+  "tooltip.wacumber.cucumber_sword.line1": "The power of a halved soul dances at your fingertips",
+  "tooltip.wacumber.cucumber_pickaxe.line1": "Grab a cucumber and go mining!",
+  "tooltip.wacumber.cucumber_pickaxe.shift1": "Matcha parfait is green too",
+  "tooltip.wacumber.cucumber_axe.line1": "Chopping trees like cutting a puppet's strings",
+  "tooltip.wacumber.cucumber_axe.shift1": "It's about to break",
 
   "wacumber.configuration.title": "Wacumber Configs",
   "wacumber.configuration.section.wacumber.common.toml": "Wacumber Configs",
