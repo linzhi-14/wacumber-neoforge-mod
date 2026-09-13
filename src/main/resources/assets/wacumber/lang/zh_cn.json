@@ -5,7 +5,13 @@
   "item.wacumber.cucumber_sword": "黄瓜二分剑",
   "item.wacumber.cucumber_pickaxe": "黄瓜镐",
   "item.wacumber.cucumber_axe": "黄瓜战斧",
+  "item.wacumber.cucumber_helmet": "黄瓜头盔",
+  "item.wacumber.cucumber_chestplate": "黄瓜胸甲",
+  "item.wacumber.cucumber_leggings": "黄瓜护腿",
+  "item.wacumber.cucumber_boots": "黄瓜靴子",
   "block.wacumber.cucumber_plant": "黄瓜植株",
+  "block.wacumber.mutsumi_block": "睦子米方块",
+  "block.wacumber.mutsumi_cry_block": "哭泣的睦子米方块",
   "effect.wacumber.slient_grow": "静默生长",
 
   "tooltip.wacumber.cucumber.line1": "为什么要吃小黄瓜？！",
@@ -16,5 +22,18 @@
   "tooltip.wacumber.cucumber_pickaxe.line1": "拿黄瓜来挖矿吧！",
   "tooltip.wacumber.cucumber_pickaxe.shift1": "抹茶巴菲也是绿色的",
   "tooltip.wacumber.cucumber_axe.line1": "砍树如同砍断木偶的提线一般",
-  "tooltip.wacumber.cucumber_axe.shift1": "快要坏掉了"
+  "tooltip.wacumber.cucumber_axe.shift1": "快要坏掉了",
+
+  "tooltip.wacumber.cucumber_helmet.line1": "你想变成黄瓜脑袋吗",
+  "tooltip.wacumber.cucumber_chestplate.line1": "现在你是绿色的了！",
+  "tooltip.wacumber.cucumber_leggings.line1": "腿子会变幸运一些吗",
+  "tooltip.wacumber.cucumber_boots.line1": "我知道黄瓜是对的",
+  "tooltip.wacumber.cucumber_armor.shift1": "穿戴满四个黄瓜盔甲",
+  "tooltip.wacumber.cucumber_armor.shift2": "你会获得睦子米的眷属",
+  "tooltip.wacumber.cucumber_armor.shift3": "效果：血量双倍，攻击你的生物将会玉玉一秒",
+
+  "tooltip.wacumber.mutsumi_block.line1": "其中心5x5范围内的作物的生长速度都会得到提高",
+  "tooltip.wacumber.mutsumi_cry_block.line1": "很显然睦子米燃尽了",
+  "tooltip.wacumber.mutsumi_cry_block.line2": "使用空瓶右键它",
+  "tooltip.wacumber.mutsumi_cry_block.line3": "并让它重获活力吧"
 }

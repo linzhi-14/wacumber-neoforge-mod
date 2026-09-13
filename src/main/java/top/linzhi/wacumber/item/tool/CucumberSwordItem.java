@@ -1,4 +1,4 @@
-package top.linzhi.wacumber.item;
+package top.linzhi.wacumber.item.tool;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

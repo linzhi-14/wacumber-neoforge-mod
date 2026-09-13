@@ -1,7 +1,7 @@
 package top.linzhi.wacumber.item.properties;
 
 import top.linzhi.wacumber.effect.ModMobEffects;
-import top.linzhi.wacumber.item.CucumberTier;
+import top.linzhi.wacumber.item.tool.CucumberTier;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
@@ -80,5 +81,14 @@ public final class ModItemProperties {
     public static Item.Properties cucumberAxe() {
         return new Item.Properties()
                 .attributes(AxeItem.createAttributes(CucumberTier.INSTANCE, 6.0F, -3.1F));
+    }
+
+    /**
+     * 黄瓜护甲：耐久按原版护甲倍率 28（介于铁 15 与钻石 33 之间）。
+     * 护甲值与韧性不在这里设置——它们由 {@code CucumberArmorItem#getDefaultAttributeModifiers()}
+     * 逐件指定（因为 ArmorItem 构造器会忽略 Properties.attributes）。
+     */
+    public static Item.Properties cucumberArmor(ArmorItem.Type type) {
+        return new Item.Properties().durability(type.getDurability(28));
     }
 }

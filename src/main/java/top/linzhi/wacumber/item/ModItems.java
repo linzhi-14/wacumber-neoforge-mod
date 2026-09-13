@@ -1,11 +1,16 @@
 package top.linzhi.wacumber.item;
 
+import top.linzhi.wacumber.item.tool.CucumberTier;
+import top.linzhi.wacumber.item.tool.CucumberSwordItem;
+import top.linzhi.wacumber.item.armor.CucumberArmorItem;
+import top.linzhi.wacumber.item.armor.ModArmorMaterials;
 import top.linzhi.wacumber.Wacumber;
 import top.linzhi.wacumber.block.ModBlocks;
 import top.linzhi.wacumber.item.properties.ModItemProperties;
 
 import java.util.function.Supplier;
 
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -80,6 +85,42 @@ public final class ModItems {
     public static final DeferredItem<AxeItem> CUCUMBER_AXE = register(
             "cucumber_axe",
             () -> new AxeItem(CucumberTier.INSTANCE, ModItemProperties.cucumberAxe()));
+
+    // ============ 黄瓜盔甲（护甲值 / 韧性逐件指定，见 CucumberArmorItem） ============
+
+    /** 黄瓜头盔：护甲 2 / 韧性 1 */
+    public static final DeferredItem<CucumberArmorItem> CUCUMBER_HELMET = register(
+            "cucumber_helmet",
+            () -> new CucumberArmorItem(ModArmorMaterials.CUCUMBER, ArmorItem.Type.HELMET,
+                    2, 1.0F, ModItemProperties.cucumberArmor(ArmorItem.Type.HELMET)));
+
+    /** 黄瓜胸甲：护甲 6 / 韧性 4 */
+    public static final DeferredItem<CucumberArmorItem> CUCUMBER_CHESTPLATE = register(
+            "cucumber_chestplate",
+            () -> new CucumberArmorItem(ModArmorMaterials.CUCUMBER, ArmorItem.Type.CHESTPLATE,
+                    6, 4.0F, ModItemProperties.cucumberArmor(ArmorItem.Type.CHESTPLATE)));
+
+    /** 黄瓜护腿：护甲 4 / 韧性 3 */
+    public static final DeferredItem<CucumberArmorItem> CUCUMBER_LEGGINGS = register(
+            "cucumber_leggings",
+            () -> new CucumberArmorItem(ModArmorMaterials.CUCUMBER, ArmorItem.Type.LEGGINGS,
+                    4, 3.0F, ModItemProperties.cucumberArmor(ArmorItem.Type.LEGGINGS)));
+
+    /** 黄瓜靴子：护甲 1 / 韧性 1 */
+    public static final DeferredItem<CucumberArmorItem> CUCUMBER_BOOTS = register(
+            "cucumber_boots",
+            () -> new CucumberArmorItem(ModArmorMaterials.CUCUMBER, ArmorItem.Type.BOOTS,
+                    1, 1.0F, ModItemProperties.cucumberArmor(ArmorItem.Type.BOOTS)));
+
+    // ============ 方块物品 ============
+
+    /** 睦子米方块（方块物品），会自动进黄瓜物品栏 */
+    public static final DeferredItem<BlockItem> MUTSUMI_BLOCK =
+            registerBlockItem("mutsumi_block", ModBlocks.MUTSUMI_BLOCK);
+
+    /** 哭泣的睦子米方块（方块物品） */
+    public static final DeferredItem<BlockItem> MUTSUMI_CRY_BLOCK =
+            registerBlockItem("mutsumi_cry_block", ModBlocks.MUTSUMI_CRY_BLOCK);
 
     private ModItems() {
         // 纯工具类，禁止实例化

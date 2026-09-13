@@ -109,6 +109,42 @@ public final class ModTooltips {
                 List.of(
                         TooltipLine.of("tooltip.wacumber.cucumber_axe.shift1", ChatFormatting.DARK_GREEN)),
                 true);
+
+        // —— 黄瓜盔甲（普通行绿色；按 Shift 统一显示金黄色套装说明）——
+        // 套装说明分三行，每行一个语言键（游戏内不会解析文本里的 \n，必须拆成多条）
+        List<TooltipLine> armorSetLines = List.of(
+                TooltipLine.of("tooltip.wacumber.cucumber_armor.shift1", ChatFormatting.GOLD),
+                TooltipLine.of("tooltip.wacumber.cucumber_armor.shift2", ChatFormatting.GOLD),
+                TooltipLine.of("tooltip.wacumber.cucumber_armor.shift3", ChatFormatting.GOLD));
+
+        register(ModItems.CUCUMBER_HELMET,
+                List.of(TooltipLine.of("tooltip.wacumber.cucumber_helmet.line1", ChatFormatting.GREEN)),
+                armorSetLines, true);
+
+        register(ModItems.CUCUMBER_CHESTPLATE,
+                List.of(TooltipLine.of("tooltip.wacumber.cucumber_chestplate.line1", ChatFormatting.GREEN)),
+                armorSetLines, true);
+
+        register(ModItems.CUCUMBER_LEGGINGS,
+                List.of(TooltipLine.of("tooltip.wacumber.cucumber_leggings.line1", ChatFormatting.GREEN)),
+                armorSetLines, true);
+
+        register(ModItems.CUCUMBER_BOOTS,
+                List.of(TooltipLine.of("tooltip.wacumber.cucumber_boots.line1", ChatFormatting.GREEN)),
+                armorSetLines, true);
+
+        // —— 睦子米方块（灰色普通行，无 Shift）——
+        register(ModItems.MUTSUMI_BLOCK,
+                List.of(TooltipLine.of("tooltip.wacumber.mutsumi_block.line1")),
+                List.of(), true);
+
+        // —— 哭泣的睦子米方块（三行普通文本，每行一个语言键）——
+        register(ModItems.MUTSUMI_CRY_BLOCK,
+                List.of(
+                        TooltipLine.of("tooltip.wacumber.mutsumi_cry_block.line1"),
+                        TooltipLine.of("tooltip.wacumber.mutsumi_cry_block.line2"),
+                        TooltipLine.of("tooltip.wacumber.mutsumi_cry_block.line3")),
+                List.of(), true);
     }
 
     // ============ 客户端：统一渲染 tooltip ============

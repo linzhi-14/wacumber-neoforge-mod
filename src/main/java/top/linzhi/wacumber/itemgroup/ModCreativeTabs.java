@@ -1,5 +1,6 @@
-package top.linzhi.wacumber.item;
+package top.linzhi.wacumber.itemgroup;
 
+import top.linzhi.wacumber.item.ModItems;
 import top.linzhi.wacumber.Wacumber;
 
 import net.minecraft.core.registries.Registries;

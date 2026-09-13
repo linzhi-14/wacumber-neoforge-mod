@@ -1,5 +1,6 @@
-package top.linzhi.wacumber.item;
+package top.linzhi.wacumber.item.tool;
 
+import top.linzhi.wacumber.item.ModItems;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;

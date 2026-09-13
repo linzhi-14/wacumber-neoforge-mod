@@ -2,7 +2,6 @@ package top.linzhi.wacumber.block;
 
 import top.linzhi.wacumber.Wacumber;
 
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -43,6 +42,40 @@ public final class ModBlocks {
                             .sound(SoundType.CROP)
                             .noOcclusion()       // 植株藤蔓模型穿出碰撞范围时避免相邻面剔除错乱
                             .pushReaction(PushReaction.DESTROY)));
+
+    /**
+     * 睦子米方块：注册 id 为 "wacumber:mutsumi_block"。
+     * 促进周围 5×5×5 内作物生长（+20%），放置约 10 游戏日后随随机刻腐化成哭泣形态。
+     * 方块属性对齐原版史莱姆方块（摩擦 0.8、史莱姆音效、不遮挡视线、不窒息），
+     * 另需 {@code randomTicks()} 才能收到随机刻进行腐化判定。
+     */
+    public static final DeferredBlock<MutsumiBlock> MUTSUMI_BLOCK =
+            BLOCKS.register("mutsumi_block", () -> new MutsumiBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PINK)
+                            .strength(0.5F)
+                            .friction(0.8F)                          // 同史莱姆方块
+                            .sound(SoundType.SLIME_BLOCK)            // 同史莱姆方块
+                            .noOcclusion()
+                            .isViewBlocking((state, level, pos) -> false)
+                            .isSuffocating((state, level, pos) -> false)
+                            .randomTicks()));                        // ★ 腐化依赖随机刻
+
+    /**
+     * 哭泣的睦子米方块：注册 id 为 "wacumber:mutsumi_cry_block"。
+     * 不再促进作物生长；可用空玻璃瓶右键使其恢复，并把空瓶变成幸运药水。
+     * 方块属性同样对齐原版史莱姆方块。
+     */
+    public static final DeferredBlock<MutsumiCryingBlock> MUTSUMI_CRY_BLOCK =
+            BLOCKS.register("mutsumi_cry_block", () -> new MutsumiCryingBlock(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PINK)
+                            .strength(0.5F)
+                            .friction(0.8F)
+                            .sound(SoundType.SLIME_BLOCK)
+                            .noOcclusion()
+                            .isViewBlocking((state, level, pos) -> false)
+                            .isSuffocating((state, level, pos) -> false)));
 
     private ModBlocks() {
         // 纯工具类，禁止实例化

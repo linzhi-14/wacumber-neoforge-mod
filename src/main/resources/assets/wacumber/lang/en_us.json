@@ -5,7 +5,13 @@
   "item.wacumber.cucumber_sword": "Cucumber Halving Sword",
   "item.wacumber.cucumber_pickaxe": "Cucumber Pickaxe",
   "item.wacumber.cucumber_axe": "Cucumber Battle Axe",
+  "item.wacumber.cucumber_helmet": "Cucumber Helmet",
+  "item.wacumber.cucumber_chestplate": "Cucumber Chestplate",
+  "item.wacumber.cucumber_leggings": "Cucumber Leggings",
+  "item.wacumber.cucumber_boots": "Cucumber Boots",
   "block.wacumber.cucumber_plant": "Cucumber Plant",
+  "block.wacumber.mutsumi_block": "Mutsumi Block",
+  "block.wacumber.mutsumi_cry_block": "Crying Mutsumi Block",
   "effect.wacumber.slient_grow": "Silent Growth",
 
   "tooltip.wacumber.cucumber.line1": "Why would you eat the little cucumber?!",
@@ -17,6 +23,19 @@
   "tooltip.wacumber.cucumber_pickaxe.shift1": "Matcha parfait is green too",
   "tooltip.wacumber.cucumber_axe.line1": "Chopping trees like cutting a puppet's strings",
   "tooltip.wacumber.cucumber_axe.shift1": "It's about to break",
+
+  "tooltip.wacumber.cucumber_helmet.line1": "Do you want to become a cucumber-head?",
+  "tooltip.wacumber.cucumber_chestplate.line1": "Now you're green!",
+  "tooltip.wacumber.cucumber_leggings.line1": "Will your legs get any luckier?",
+  "tooltip.wacumber.cucumber_boots.line1": "I know the cucumber is right",
+  "tooltip.wacumber.cucumber_armor.shift1": "Wear all four cucumber armor pieces",
+  "tooltip.wacumber.cucumber_armor.shift2": "You become kin of Mutsumi",
+  "tooltip.wacumber.cucumber_armor.shift3": "Effect: double max health; mobs that attack you get gloomy for 1 second",
+
+  "tooltip.wacumber.mutsumi_block.line1": "Crops within the 5x5 around its center grow faster",
+  "tooltip.wacumber.mutsumi_cry_block.line1": "Apparently Mutsumi has burned out",
+  "tooltip.wacumber.mutsumi_cry_block.line2": "Right-click it with an empty bottle",
+  "tooltip.wacumber.mutsumi_cry_block.line3": "And let it regain its vitality",
 
   "wacumber.configuration.title": "Wacumber Configs",
   "wacumber.configuration.section.wacumber.common.toml": "Wacumber Configs",
