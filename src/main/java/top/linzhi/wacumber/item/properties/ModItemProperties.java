@@ -36,6 +36,7 @@ public final class ModItemProperties {
         return new Item.Properties()
                 .food(new FoodProperties.Builder()
                         .nutrition(2)
+                        .fast()
                         // 若想要"实际 +3 饱和度"，把 3f 改成 0.75f
                         .saturationModifier(3f)
                         .effect(() -> new MobEffectInstance(MobEffects.LUCK, 3 * 60 * 20, 0), 1f)
@@ -90,5 +91,10 @@ public final class ModItemProperties {
      */
     public static Item.Properties cucumberArmor(ArmorItem.Type type) {
         return new Item.Properties().durability(type.getDurability(28));
+    }
+
+    /** 黄瓜球（投掷物）：可堆叠 16；伤害由实体侧决定（玩家投掷为 0） */
+    public static Item.Properties cucumberBall() {
+        return new Item.Properties().stacksTo(16);
     }
 }

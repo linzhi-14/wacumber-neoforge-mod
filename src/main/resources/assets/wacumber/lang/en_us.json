@@ -9,9 +9,11 @@
   "item.wacumber.cucumber_chestplate": "Cucumber Chestplate",
   "item.wacumber.cucumber_leggings": "Cucumber Leggings",
   "item.wacumber.cucumber_boots": "Cucumber Boots",
+  "item.wacumber.cucumber_ball": "Cucumber Ball",
   "block.wacumber.cucumber_plant": "Cucumber Plant",
   "block.wacumber.mutsumi_block": "Mutsumi Block",
   "block.wacumber.mutsumi_cry_block": "Crying Mutsumi Block",
+  "entity.wacumber.mutsumi_puppet": "Mutsumi Puppet",
   "effect.wacumber.slient_grow": "Silent Growth",
 
   "tooltip.wacumber.cucumber.line1": "Why would you eat the little cucumber?!",

@@ -122,6 +122,11 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> MUTSUMI_CRY_BLOCK =
             registerBlockItem("mutsumi_cry_block", ModBlocks.MUTSUMI_CRY_BLOCK);
 
+    /** 黄瓜球：像雪球一样右键投掷，击中不造成伤害（投掷物实体见 entity.CucumberBallEntity） */
+    public static final DeferredItem<CucumberBallItem> CUCUMBER_BALL = register(
+            "cucumber_ball",
+            () -> new CucumberBallItem(ModItemProperties.cucumberBall()));
+
     private ModItems() {
         // 纯工具类，禁止实例化
     }

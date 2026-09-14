@@ -10,6 +10,8 @@ import com.mojang.logging.LogUtils;
 import top.linzhi.wacumber.block.ModBlocks;
 import top.linzhi.wacumber.client.ModTooltips;
 import top.linzhi.wacumber.effect.ModMobEffects;
+import top.linzhi.wacumber.entity.ModEntities;
+import top.linzhi.wacumber.entity.MutsumiPuppetEntity;
 import top.linzhi.wacumber.item.armor.ModArmorMaterials;
 import top.linzhi.wacumber.itemgroup.ModCreativeTabs;
 import top.linzhi.wacumber.item.ModItems;
@@ -24,6 +26,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -60,12 +63,21 @@ public class Wacumber {
         ModMobEffects.register(modEventBus);
         // 盔甲材质（黄瓜）注册进注册总线；其修复材料引用 ModItems.CUCUMBER，故放在物品注册之后
         ModArmorMaterials.register(modEventBus);
+        // 实体类型（黄瓜球、睦偶等）注册进注册总线
+        ModEntities.register(modEventBus);
+        // 实体基础属性注册（EntityAttributeCreationEvent 也是 mod 总线事件）
+        modEventBus.addListener(this::registerEntityAttributes);
 
         // 注册到 NeoForge 游戏事件总线：仅当本类存在 @SubscribeEvent 方法时需要
         NeoForge.EVENT_BUS.register(this);
 
         // 注册 ModConfigSpec，让 FML 生成并加载配置文件
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    /** 注册实体基础属性（睦偶：20 血 / 移速 0.3 / 索敌 32 格） */
+    private void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.MUTSUMI_PUPPET.get(), MutsumiPuppetEntity.createAttributes().build());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
