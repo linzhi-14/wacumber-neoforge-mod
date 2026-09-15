@@ -50,13 +50,14 @@ public class MutsumiPuppetModel extends EntityModel<MutsumiPuppetEntity> {
     /** 坐下时双腿从髋部向外张开的弧度（V 字的一半夹角）；若张开方向相反，把下面两次赋值的符号对调 */
     private static final float SIT_LEG_SPREAD = 0.70F;
 
-    private final ModelPart head;
-    private final ModelPart hair;
-    private final ModelPart body;
-    private final ModelPart leftArm;
-    private final ModelPart rightArm;
-    private final ModelPart leftLeg;
-    private final ModelPart rightLeg;
+    // 子类（墨偶模型）复用这些部件与动画，故为 protected
+    protected final ModelPart head;
+    protected final ModelPart hair;
+    protected final ModelPart body;
+    protected final ModelPart leftArm;
+    protected final ModelPart rightArm;
+    protected final ModelPart leftLeg;
+    protected final ModelPart rightLeg;
 
     public MutsumiPuppetModel(ModelPart root) {
         this.head = root.getChild("head");

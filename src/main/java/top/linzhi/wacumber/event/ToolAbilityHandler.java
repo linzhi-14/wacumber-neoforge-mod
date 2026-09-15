@@ -2,12 +2,18 @@ package top.linzhi.wacumber.event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import top.linzhi.wacumber.Wacumber;
+import top.linzhi.wacumber.entity.ModEntities;
+import top.linzhi.wacumber.entity.MortisPuppetEntity;
+import top.linzhi.wacumber.entity.MutsumiPuppetEntity;
 import top.linzhi.wacumber.item.ModItemTags;
 import top.linzhi.wacumber.item.ModItems;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -58,9 +64,50 @@ public final class ToolAbilityHandler {
             return;
         }
 
-        // 先取消本次普通伤害（二分剑不造成伤害），再执行二分效果
+        // ---- 睦偶 / 墨偶：不吃「二分」效果 ----
+        if (target instanceof MutsumiPuppetEntity puppet) {
+            if (puppet instanceof MortisPuppetEntity) {
+                return; // 墨偶：无论被砍多少次都只受普通伤害
+            }
+            if (!puppet.hasSpawnedMortis()) {
+                // 第一次被砍：本次不掉血，只在原地诞生一只墨偶并做好标记
+                event.setAmount(0.0F);
+                spawnMortis(puppet, player);
+                puppet.markMortisSpawned();
+            }
+            // 已诞生过墨偶 → 之后的每次砍击都只是普通伤害
+            return;
+        }
+
+        // 其它生物：二分剑原本的效果（取消普通伤害，改为血量减半 / 斩杀 / 分身）
         event.setAmount(0.0F);
         applyHalving(target);
+    }
+
+    /**
+     * 睦偶被二分剑砍中第一次时：在其坐标生成一只墨偶。
+     * 墨偶继承睦偶的原主人；若睦偶没有主人，则认攻击者为主人。
+     */
+    private static void spawnMortis(MutsumiPuppetEntity source, Player attacker) {
+        if (!(source.level() instanceof ServerLevel level)) {
+            return;
+        }
+        MortisPuppetEntity mortis = ModEntities.MORTIS_PUPPET.get().create(level);
+        if (mortis == null) {
+            return;
+        }
+        mortis.moveTo(source.getX(), source.getY(), source.getZ(), source.getYRot(), source.getXRot());
+        UUID ownerId = source.getOwnerUUID();
+        if (ownerId != null) {
+            mortis.setOwnerUUID(ownerId);
+            mortis.setTame(true, true);
+        } else {
+            mortis.tameBy(attacker);
+        }
+        mortis.setPersistenceRequired();
+        level.addFreshEntity(mortis);
+        level.playSound(null, source.blockPosition(), SoundEvents.ENDERMAN_TELEPORT,
+                SoundSource.NEUTRAL, 1.0F, 0.8F);
     }
 
     /** 二分逻辑：≤5 血斩杀；否则血量减半并生成同血量分身 */

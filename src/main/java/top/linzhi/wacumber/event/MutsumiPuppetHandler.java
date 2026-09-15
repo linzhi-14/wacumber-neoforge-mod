@@ -3,6 +3,7 @@ package top.linzhi.wacumber.event;
 import top.linzhi.wacumber.Wacumber;
 import top.linzhi.wacumber.block.ModBlocks;
 import top.linzhi.wacumber.entity.ModEntities;
+import top.linzhi.wacumber.entity.MortisPuppetEntity;
 import top.linzhi.wacumber.entity.MutsumiPuppetEntity;
 
 import net.minecraft.core.BlockPos;
@@ -103,6 +104,40 @@ public final class MutsumiPuppetHandler {
                 owner.getBoundingBox().inflate(GUARD_RADIUS))) {
             if (owner.getUUID().equals(puppet.getOwnerUUID())) {
                 puppet.setTarget(attacker);
+            }
+        }
+    }
+
+    // ==================== 主人主动进攻时的联动（仅墨偶） ====================
+
+    /**
+     * 玩家主动攻击某个生物时，其名下的<b>墨偶</b>也会攻击该生物。
+     *
+     * <p>与上面的护卫反击不同，这里只影响 {@link MortisPuppetEntity}：
+     * 睦偶不会因为主人主动出手而参战。
+     * 若被攻击者是睦偶/墨偶（自家友军），则不联动，避免同伴互相攻击。
+     */
+    @SubscribeEvent
+    public static void onOwnerAttack(LivingIncomingDamageEvent event) {
+        if (!(event.getEntity() instanceof LivingEntity victim) || victim.level().isClientSide()) {
+            return;
+        }
+        // 不针对自家同伴（睦偶 / 墨偶）联动
+        if (victim instanceof MutsumiPuppetEntity) {
+            return;
+        }
+        Entity attackerEntity = event.getSource().getEntity();
+        if (!(attackerEntity instanceof Player owner) || victim == owner) {
+            return;
+        }
+        if (!(owner.level() instanceof ServerLevel level)) {
+            return;
+        }
+        // 只让「属于该玩家的墨偶」锁定目标
+        for (MortisPuppetEntity mortis : level.getEntitiesOfClass(MortisPuppetEntity.class,
+                owner.getBoundingBox().inflate(GUARD_RADIUS))) {
+            if (owner.getUUID().equals(mortis.getOwnerUUID())) {
+                mortis.setTarget(victim);
             }
         }
     }

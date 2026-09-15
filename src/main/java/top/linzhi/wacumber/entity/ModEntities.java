@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -48,15 +49,39 @@ public final class ModEntities {
                     .clientTrackingRange(10)
                     .build("mutsumi_puppet"));
 
+    /**
+     * 墨偶：注册 id 为 "wacumber:mortis_puppet"。
+     * 由黄瓜二分剑砍中睦偶时诞生（见 {@code event.ToolAbilityHandler}）；
+     * 行为与睦偶相同，黄瓜球伤害 10 且点燃目标 5 秒。
+     */
+    public static final DeferredHolder<EntityType<?>, EntityType<MortisPuppetEntity>> MORTIS_PUPPET =
+            ENTITY_TYPES.register("mortis_puppet", () -> EntityType.Builder
+                    .of(MortisPuppetEntity::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.5F)
+                    .clientTrackingRange(10)
+                    .build("mortis_puppet"));
+
     private ModEntities() {
         // 纯工具类，禁止实例化
     }
 
     /**
-     * 注入实体类型注册总线。
+     * 注册实体基础属性（睦偶与墨偶共用一套：165 血 / 移速 0.3 / 索敌 32 格）。
+     * 由 {@link #register(IEventBus)} 自动挂到 mod 事件总线上，主类无需参与。
+     */
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(MUTSUMI_PUPPET.get(), MutsumiPuppetEntity.createAttributes().build());
+        // 墨偶直接继承睦偶，属性一致
+        event.put(MORTIS_PUPPET.get(), MutsumiPuppetEntity.createAttributes().build());
+    }
+
+    /**
+     * 注入实体类型注册总线，并顺带挂载实体属性注册。
      * 在主类构造器里调用一次：{@code ModEntities.register(modEventBus);}
      */
     public static void register(IEventBus modEventBus) {
         ENTITY_TYPES.register(modEventBus);
+        // 实体属性注册（EntityAttributeCreationEvent 同样是 mod 总线事件）
+        modEventBus.addListener(ModEntities::registerAttributes);
     }
 }

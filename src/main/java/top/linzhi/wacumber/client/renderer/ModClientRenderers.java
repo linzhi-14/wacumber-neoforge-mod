@@ -1,5 +1,6 @@
 package top.linzhi.wacumber.client.renderer;
 
+import top.linzhi.wacumber.client.model.MortisPuppetModel;
 import top.linzhi.wacumber.client.model.MutsumiPuppetModel;
 import top.linzhi.wacumber.entity.ModEntities;
 
@@ -22,6 +23,7 @@ public final class ModClientRenderers {
     /** 注册实体模型层定义（必须先于渲染器注册，否则 bakeLayer 找不到层） */
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MutsumiPuppetModel.LAYER_LOCATION, MutsumiPuppetModel::createBodyLayer);
+        event.registerLayerDefinition(MortisPuppetModel.LAYER_LOCATION, MortisPuppetModel::createBodyLayer);
     }
 
     /** 注册所有实体渲染器 */
@@ -30,5 +32,7 @@ public final class ModClientRenderers {
         event.registerEntityRenderer(ModEntities.CUCUMBER_BALL.get(), ThrownItemRenderer::new);
         // 睦偶：自定义模型 + 贴图
         event.registerEntityRenderer(ModEntities.MUTSUMI_PUPPET.get(), MutsumiPuppetRenderer::new);
+        // 墨偶：复用睦偶的渲染器泛型（其模型继承睦偶模型），只换模型层与贴图
+        event.registerEntityRenderer(ModEntities.MORTIS_PUPPET.get(), MortisPuppetRenderer::new);
     }
 }

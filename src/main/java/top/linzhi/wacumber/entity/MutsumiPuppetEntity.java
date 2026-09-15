@@ -1,8 +1,10 @@
 package top.linzhi.wacumber.entity;
 
+import org.jetbrains.annotations.NotNull;
 import top.linzhi.wacumber.entity.projectile.CucumberBallEntity;
 import top.linzhi.wacumber.item.ModItems;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -36,7 +38,7 @@ import net.minecraft.world.level.Level;
  *   <li>跟随主人（{@link FollowOwnerGoal}）；</li>
  *   <li>时不时转头看向附近的玩家（{@link LookAtPlayerGoal}）；</li>
  *   <li><b>主人被攻击时锁定攻击者</b>（{@link OwnerHurtByTargetGoal}），
- *       并每隔 {@value #ATTACK_INTERVAL_TICKS} tick 发射一发黄瓜球（伤害 {@value #BALL_DAMAGE}）；</li>
+ *       并每隔 {@value #ATTACK_INTERVAL_TICKS} tick 发射一发黄瓜球；</li>
  *   <li>自身被攻击也会反击（{@link HurtByTargetGoal}）；不参与繁殖。</li>
  * </ul>
  *
@@ -49,8 +51,11 @@ public class MutsumiPuppetEntity extends TamableAnimal implements RangedAttackMo
     private static final int ATTACK_INTERVAL_TICKS = 20;
     /** 攻击射程（格） */
     private static final float ATTACK_RANGE = 16.0F;
-    /** 黄瓜球命中伤害：5（10 点血 = 5 颗心的一半? 此处按“5 滴血”即 5 点伤害） */
-    private static final float BALL_DAMAGE = 5.0F;
+    /** 睦偶黄瓜球默认伤害（墨偶覆写为 10） */
+    private static final float DEFAULT_BALL_DAMAGE = 5.0F;
+
+    /** 是否已经因被黄瓜二分剑砍中而诞生过墨偶（每只睦偶只触发一次，写入 NBT 持久化） */
+    private boolean spawnedMortis;
 
     public MutsumiPuppetEntity(EntityType<? extends MutsumiPuppetEntity> type, Level level) {
         super(type, level);
@@ -86,7 +91,7 @@ public class MutsumiPuppetEntity extends TamableAnimal implements RangedAttackMo
      * 非 Shift 右键仍交回 {@link TamableAnimal} 默认处理。
      */
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (this.isTame() && player.isSecondaryUseActive()) {
             if (!this.level().isClientSide()) {
                 boolean sitting = !this.isOrderedToSit();
@@ -115,7 +120,8 @@ public class MutsumiPuppetEntity extends TamableAnimal implements RangedAttackMo
     public void performRangedAttack(LivingEntity target, float velocity) {
         CucumberBallEntity ball = new CucumberBallEntity(this.level(), this);
         ball.setItem(new ItemStack(ModItems.CUCUMBER_BALL.get()));
-        ball.setDamage(BALL_DAMAGE);
+        ball.setDamage(getBallDamage());
+        ball.setFireSeconds(getBallFireSeconds());
 
         double dx = target.getX() - this.getX();
         // ★ 与原版雪傀儡一致：瞄准目标「眼睛下方 1.1 格」（约胸口），而不是直接瞄眼睛，
@@ -130,6 +136,38 @@ public class MutsumiPuppetEntity extends TamableAnimal implements RangedAttackMo
 
         this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F,
                 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+    }
+
+    /** 黄瓜球伤害（墨偶覆写为 10） */
+    protected float getBallDamage() {
+        return DEFAULT_BALL_DAMAGE;
+    }
+
+    /** 黄瓜球点燃目标的秒数（睦偶为 0；墨偶覆写为 5） */
+    protected float getBallFireSeconds() {
+        return 0.0F;
+    }
+
+    /** 是否已经诞生过墨偶（被二分剑砍中一次后为 true，之后再砍不再生成） */
+    public boolean hasSpawnedMortis() {
+        return this.spawnedMortis;
+    }
+
+    /** 标记「已诞生过墨偶」 */
+    public void markMortisSpawned() {
+        this.spawnedMortis = true;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("SpawnedMortis", this.spawnedMortis);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.spawnedMortis = tag.getBoolean("SpawnedMortis");
     }
 
     /** 由召唤逻辑调用：认该玩家为主人 */

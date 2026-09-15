@@ -26,6 +26,9 @@ public class CucumberBallEntity extends Snowball {
     /** 命中伤害，0 = 无伤害 */
     private float damage;
 
+    /** 命中后点燃目标的秒数，0 = 不点燃（睦偶发射为 0，墨偶为 5） */
+    private float fireSeconds;
+
     public CucumberBallEntity(EntityType<? extends CucumberBallEntity> type, Level level) {
         super(type, level);
     }
@@ -45,6 +48,15 @@ public class CucumberBallEntity extends Snowball {
 
     public float getDamage() {
         return this.damage;
+    }
+
+    /** 设置命中后点燃目标的秒数（墨偶发射时传 5） */
+    public void setFireSeconds(float fireSeconds) {
+        this.fireSeconds = fireSeconds;
+    }
+
+    public float getFireSeconds() {
+        return this.fireSeconds;
     }
 
     /** 渲染与默认物品：黄瓜球 */
@@ -70,8 +82,14 @@ public class CucumberBallEntity extends Snowball {
         if (target instanceof Player || target instanceof MutsumiPuppetEntity) {
             return;
         }
-        if (this.damage > 0.0F && target instanceof LivingEntity living) {
-            living.hurt(this.damageSources().thrown(this, this.getOwner()), this.damage);
+        if (target instanceof LivingEntity living) {
+            if (this.damage > 0.0F) {
+                living.hurt(this.damageSources().thrown(this, this.getOwner()), this.damage);
+            }
+            // 墨偶的黄瓜球会点燃目标
+            if (this.fireSeconds > 0.0F) {
+                living.igniteForSeconds(this.fireSeconds);
+            }
         }
     }
 }
